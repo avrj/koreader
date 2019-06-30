@@ -251,8 +251,11 @@ function OTAManager:fetchAndProcessUpdate()
                     })
                     UIManager:scheduleIn(1, function()
                         if OTAManager:zsync() == 0 then
-                            UIManager:show(InfoMessage:new{
-                                text = _("KOReader will be updated on next restart."),
+                            UIManager:show(ConfirmBox:new{
+                                text = _("KOReader will be updated on next restart. Do you want to restart now?"),
+                                ok_callback = function()
+                                    UIManager:restartKOReader()
+                                end,
                             })
                             -- Make it clear that zsync is done
                             if self.can_pretty_print then
@@ -277,8 +280,11 @@ function OTAManager:fetchAndProcessUpdate()
                                     -- And then relaunch zsync in full download mode...
                                     UIManager:scheduleIn(1, function()
                                         if OTAManager:zsync(true) == 0 then
-                                            UIManager:show(InfoMessage:new{
-                                                text = _("KOReader will be updated on next restart."),
+                                            UIManager:show(ConfirmBox:new{
+                                                text = _("KOReader will be updated on next restart. Do you want to restart now?"),
+                                                ok_callback = function()
+                                                    UIManager:restartKOReader()
+                                                end,
                                             })
                                             -- Make it clear that zsync is done
                                             if self.can_pretty_print then
